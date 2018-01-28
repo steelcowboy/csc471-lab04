@@ -1,7 +1,3 @@
-/*
-ZJ Wood CPE 471 Lab 3 base code - I. Dunn class re-write
-*/
-
 #include <iostream>
 #include <glad/glad.h>
 
@@ -153,7 +149,7 @@ public:
 		GLSL::checkVersion();
 
 		// Set background color.
-		glClearColor(0.012f, 0.098f, 0.475f, 1.0f);
+		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		// Enable z-buffer test.
 		glEnable(GL_DEPTH_TEST);
 
@@ -164,6 +160,9 @@ public:
 		prog->init();
 		prog->addUniform("P");
 		prog->addUniform("MV");
+        prog->addUniform("uWindowSize");
+        prog->addUniform("uTime");
+        prog->addUniform("uCenter");
 		prog->addAttribute("vertPos");
 		prog->addAttribute("vertexColor");
 	}
@@ -206,6 +205,10 @@ public:
 		//send the matrices to the shaders
 		glUniformMatrix4fv(prog->getUniform("P"), 1, GL_FALSE, glm::value_ptr(P->topMatrix()));
 		glUniformMatrix4fv(prog->getUniform("MV"), 1, GL_FALSE, glm::value_ptr(MV->topMatrix()));
+
+		glUniform2f(prog->getUniform("uWindowSize"), (float) width, (float) height);
+		glUniform2f(prog->getUniform("uCenter"), (float) width/2, (float) height/2);
+        glUniform1f(prog->getUniform("uTime"), (float) glfwGetTime());
 
 		glBindVertexArray(VertexArrayID);
 
