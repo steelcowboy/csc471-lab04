@@ -10,7 +10,7 @@ in vec3 fragmentColor;
 void main()
 {
     float minDimHalf = min(uWindowSize.x, uWindowSize.y)/2.0;
-    float pixDist = distance(gl_FragCoord.xy, uWindowSize/2);// + vec2(sin(uTime), cos(uTime)));
+    float pixDist = distance(gl_FragCoord.xy, uCenter + 30*vec2(sin(uTime), cos(uTime)));
     float distRatio = pixDist/minDimHalf;
 
     if (pixDist < 20) {
@@ -23,5 +23,5 @@ void main()
         color = fragmentColor; 
     }
 
-    color += vec3(distRatio, distRatio, distRatio);
+    color += 1.5*vec3(distRatio, distRatio, distRatio);
 }
